@@ -1,0 +1,110 @@
+def length_converter(value, from_unit, to_unit):
+    units = {
+        "m": 1,
+        "km": 1000,
+        "cm": 0.01,
+        "mm": 0.001,
+        "mi": 1609.34,
+        "ft": 0.3048,
+        "in": 0.0254
+    }
+
+    if from_unit not in units or to_unit not in units:
+        return "Invalid length unit"
+
+    return value * units[from_unit] / units[to_unit]
+
+
+def weight_converter(value, from_unit, to_unit):
+    units = {
+        "kg": 1,
+        "g": 0.001,
+        "mg": 0.000001,
+        "lb": 0.453592,
+        "oz": 0.0283495
+    }
+
+    if from_unit not in units or to_unit not in units:
+        return "Invalid weight unit"
+
+    return value * units[from_unit] / units[to_unit]
+
+
+def volume_converter(value, from_unit, to_unit):
+    units = {
+        "l": 1,
+        "ml": 0.001,
+        "m3": 1000,
+        "gal": 3.78541,
+        "cup": 0.24
+    }
+
+    if from_unit not in units or to_unit not in units:
+        return "Invalid volume unit"
+
+    return value * units[from_unit] / units[to_unit]
+
+
+def temperature_converter(value, from_unit, to_unit):
+    valid_units = ["c", "f", "k"]
+
+    if from_unit not in valid_units or to_unit not in valid_units:
+        return "Invalid temperature unit"
+
+    if from_unit == to_unit:
+        return value
+
+    # Convert to Celsius first
+    if from_unit == "f":
+        value = (value - 32) * 5 / 9
+    elif from_unit == "k":
+        value = value - 273.15
+
+    # Convert from Celsius to target unit
+    if to_unit == "f":
+        return (value * 9 / 5) + 32
+    elif to_unit == "k":
+        return value + 273.15
+    else:
+        return value
+
+
+def main():
+    print("=== Unit Converter ===")
+    print("1. Length")
+    print("2. Weight")
+    print("3. Temperature")
+    print("4. Volume")
+
+    choice = input("Choose type (1-4): ")
+
+    try:
+        value = float(input("Enter value: "))
+    except ValueError:
+        print("Invalid number")
+        return
+
+    from_unit = input("From unit: ").lower()
+    to_unit = input("To unit: ").lower()
+
+    if choice == "1":
+        result = length_converter(value, from_unit, to_unit)
+
+    elif choice == "2":
+        result = weight_converter(value, from_unit, to_unit)
+
+    elif choice == "3":
+        result = temperature_converter(value, from_unit, to_unit)
+
+    elif choice == "4":
+        result = volume_converter(value, from_unit, to_unit)
+
+    else:
+        print("Invalid choice")
+        return
+
+    print(f"Result: {result}")
+
+
+if __name__ == "__main__":
+    main()
